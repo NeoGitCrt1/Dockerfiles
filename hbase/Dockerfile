@@ -55,7 +55,7 @@ RUN set -euxo pipefail && \
     elif [ "${HBASE_VERSION:0:1}" = "1" ]; then \
         url="http://www.apache.org/dyn/closer.lua?filename=hbase/$HBASE_VERSION/hbase-$HBASE_VERSION-bin.tar.gz&action=download"; \
         url_archive="http://archive.apache.org/dist/hbase/$HBASE_VERSION/hbase-$HBASE_VERSION-bin.tar.gz"; \
-        phnix_arc_url="https://mirrors.tuna.tsinghua.edu.cn/apache/phoenix/apache-phoenix-4.14.0-HBase-1.3/bin/apache-phoenix-4.14.0-HBase-1.3-bin.tar.gz"
+        phnix_arc_url="https://mirrors.tuna.tsinghua.edu.cn/apache/phoenix/apache-phoenix-4.14.0-HBase-1.3/bin/apache-phoenix-4.14.0-HBase-1.3-bin.tar.gz"; \
     else \
         echo "unrecognized HBase version"; exit 1; \
     fi && \
