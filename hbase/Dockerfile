@@ -55,6 +55,7 @@ RUN set -euxo pipefail && \
     elif [ "${HBASE_VERSION:0:1}" = "1" ]; then \
         url="http://www.apache.org/dyn/closer.lua?filename=hbase/$HBASE_VERSION/hbase-$HBASE_VERSION-bin.tar.gz&action=download"; \
         url_archive="http://archive.apache.org/dist/hbase/$HBASE_VERSION/hbase-$HBASE_VERSION-bin.tar.gz"; \
+        phnix_arc_url="https://mirrors.tuna.tsinghua.edu.cn/apache/phoenix/apache-phoenix-4.14.0-HBase-1.3/bin/apache-phoenix-4.14.0-HBase-1.3-bin.tar.gz"
     else \
         echo "unrecognized HBase version"; exit 1; \
     fi && \
@@ -63,12 +64,16 @@ RUN set -euxo pipefail && \
     #                  (and is also the wrong version for the tag)
     wget -t 10 --max-redirect 1 --retry-connrefused -O "hbase-$HBASE_VERSION-bin.tar.gz" "$url" || \
     wget -t 10 --max-redirect 1 --retry-connrefused -O "hbase-$HBASE_VERSION-bin.tar.gz" "$url_archive" && \
+    wget -t 10 --max-redirect 1 --retry-connrefused -O "phoenix.tar.gz" "$phnix_arc_url" && \
     mkdir "hbase-$HBASE_VERSION" && \
     tar zxf "hbase-$HBASE_VERSION-bin.tar.gz" -C "hbase-$HBASE_VERSION" --strip 1 && \
     test -d "hbase-$HBASE_VERSION" && \
     ln -sv "hbase-$HBASE_VERSION" hbase && \
     rm -fv "hbase-$HBASE_VERSION-bin.tar.gz" && \
     { rm -rf hbase/{docs,src}; : ; } && \
+    tar -xzvf phoenix.tar.gz -C /opt/ && \
+    mv /opt/beh/core/phoenix-4.14.0-HBase-1.3-server.jar /hbase/lib && \
+    rm -f "phoenix.tar.gz" && \
     mkdir /hbase-data && \
     apk del tar wget
 
