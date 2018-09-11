@@ -72,8 +72,8 @@ RUN set -euxo pipefail && \
     rm -fv "hbase-$HBASE_VERSION-bin.tar.gz" && \
     { rm -rf hbase/{docs,src}; : ; } && \
     mkdir "/opt" && \
-    tar -xzvf phoenix.tar.gz -C /opt && \
-    mv /opt/beh/core/phoenix-4.14.0-HBase-1.3-server.jar /hbase/lib && \
+    tar -xzf phoenix.tar.gz -C /opt && \
+    mv /opt/apache-phoenix-4.14.0-HBase-1.3-bin/phoenix-4.14.0-HBase-1.3-server.jar /hbase/lib && \
     rm -f "phoenix.tar.gz" && \
     rm -rf "/opt" && \
     mkdir /hbase-data && \
